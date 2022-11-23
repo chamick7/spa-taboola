@@ -44,6 +44,7 @@ const Taboola = ({ placement, currentUrl }: Props) => {
   };
 
   console.log("containerId ", containerId);
+  console.log("currentUrl ", currentUrl);
 
   useEffect(() => {
     onPageLoad();

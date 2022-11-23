@@ -1,5 +1,6 @@
 import Taboola from "@/components/Taboola";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const HomePage = () => {
   const router = useRouter();
@@ -8,7 +9,7 @@ const HomePage = () => {
     <div>
       <h1>Home page</h1>
       <Taboola
-        currentUrl={router.asPath}
+        currentUrl={`https://spa-taboola.vercel.app${router.asPath}`}
         placement="Below Article Thumbnails"
       />
     </div>
