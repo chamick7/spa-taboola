@@ -32,7 +32,7 @@ const Taboola = ({ placement, currentUrl }: Props) => {
     // For each placement, pass *your* param values, as provided by Taboola:
     window._taboola.push({
       mode: "thumbnails-a",
-      container: containerId,
+      container: "taboola-below-article-thumbnails",
       placement: placement,
       target_type: "mix",
     });
@@ -61,7 +61,7 @@ const Taboola = ({ placement, currentUrl }: Props) => {
           async
         ></script>
       </Head>
-      <div id={containerId}></div>
+      <div id="taboola-below-article-thumbnails"></div>
     </>
   );
 };
