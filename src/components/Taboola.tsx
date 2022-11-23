@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-let currentUrl = "";
+let url = "";
 
 interface Props {
   placement: string;
@@ -9,13 +9,13 @@ interface Props {
 }
 
 const Taboola = ({ placement, currentUrl }: Props) => {
-  const [containerId, setContainerId] = useState<string>("");
-
   const getSaltContainerId = () => {
     const salt = `${placement}-${Math.floor(Math.random() * 1000000)}`;
 
     return salt.toLowerCase().split(" ").join("-");
   };
+
+  const [containerId, setContainerId] = useState<string>(getSaltContainerId());
 
   const onPageLoad = () => {
     window._taboola = window._taboola || [];
@@ -32,13 +32,18 @@ const Taboola = ({ placement, currentUrl }: Props) => {
     // For each placement, pass *your* param values, as provided by Taboola:
     window._taboola.push({
       mode: "thumbnails-a",
-      container: "taboola-below-article-thumbnails",
+      container: containerId,
       placement: placement,
       target_type: "mix",
     });
 
-    console.log(window._taboola);
+    if (currentUrl !== url) {
+      window._taboola.push({ notify: "newPageLoad" });
+      console.log("newPageLoad");
+    }
   };
+
+  console.log("containerId ", containerId);
 
   useEffect(() => {
     onPageLoad();
@@ -46,10 +51,6 @@ const Taboola = ({ placement, currentUrl }: Props) => {
     assignAd();
 
     window._taboola.push({ flush: true });
-
-    return () => {
-      window._taboola.push({ notify: "newPageLoad" });
-    };
   }, []);
 
   return (
@@ -61,7 +62,7 @@ const Taboola = ({ placement, currentUrl }: Props) => {
           async
         ></script>
       </Head>
-      <div id="taboola-below-article-thumbnails"></div>
+      <div id={containerId}></div>
     </>
   );
 };
