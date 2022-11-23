@@ -8,7 +8,7 @@ const HomePage = () => {
       <h1>Home page</h1>
       {
         <Taboola
-          currentUrl={"/"}
+          currentUrl={"https://spa-taboola.vercel.app/"}
           placement="Below Article Thumbnails Home"
           containerId="taboola-below-article-thumbnails-home"
         />
