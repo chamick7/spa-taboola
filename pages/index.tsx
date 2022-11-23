@@ -1,17 +1,17 @@
 import Taboola from "@/components/Taboola";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+
+const isSSR = () => typeof window === "undefined";
 
 const HomePage = () => {
-  const router = useRouter();
-
   return (
     <div>
       <h1>Home page</h1>
-      <Taboola
-        currentUrl={`https://spa-taboola.vercel.app${router.asPath}`}
-        placement="Below Article Thumbnails"
-      />
+      {!isSSR() && (
+        <Taboola
+          currentUrl={window.location.href}
+          placement="Below Article Thumbnails Home"
+        />
+      )}
     </div>
   );
 };
