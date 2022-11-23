@@ -45,6 +45,14 @@ const Taboola = ({ placement, currentUrl, containerId }: Props) => {
 
   useEffect(() => {
     onPageLoad();
+
+    return () => {
+      const nextUp = document.querySelector("#tbl-next-up");
+
+      if (nextUp) {
+        nextUp.remove();
+      }
+    };
   }, []);
 
   useEffect(() => {
