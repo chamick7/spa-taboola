@@ -61,7 +61,7 @@ const Taboola = ({ placement, currentUrl }: Props) => {
           async
         ></script>
       </Head>
-      <div id="taboola-below-article-thumbnails"></div>
+      <div id={containerId}></div>
     </>
   );
 };
