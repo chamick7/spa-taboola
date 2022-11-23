@@ -6,17 +6,10 @@ let url = "";
 interface Props {
   placement: string;
   currentUrl: string;
+  containerId: string;
 }
 
-const Taboola = ({ placement, currentUrl }: Props) => {
-  const [containerId, setContainerId] = useState<string>();
-
-  const getSaltContainerId = () => {
-    const salt = `${placement}-${Math.floor(Math.random() * 1000000)}`;
-
-    return salt.toLowerCase().split(" ").join("-");
-  };
-
+const Taboola = ({ placement, currentUrl, containerId }: Props) => {
   const onPageLoad = () => {
     console.log("onPageLoad");
 
@@ -28,8 +21,6 @@ const Taboola = ({ placement, currentUrl }: Props) => {
       window._taboola.push({ notify: "newPageLoad" });
       console.log("newPageLoad");
     }
-
-    setContainerId(getSaltContainerId());
   };
 
   const assignAd = () => {
@@ -56,6 +47,10 @@ const Taboola = ({ placement, currentUrl }: Props) => {
     onPageLoad();
   }, []);
 
+  useEffect(() => {
+    assignAd();
+  }, [currentUrl]);
+
   return (
     <>
       <Head>
@@ -65,8 +60,7 @@ const Taboola = ({ placement, currentUrl }: Props) => {
           async
         ></script>
       </Head>
-      {containerId && <div id={containerId}></div>}
-      {containerId && assignAd()}
+      {<div id={containerId}></div>}
     </>
   );
 };

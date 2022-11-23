@@ -6,12 +6,13 @@ const HomePage = () => {
   return (
     <div>
       <h1>Home page</h1>
-      {!isSSR() && (
+      {
         <Taboola
-          currentUrl={window.location.href}
+          currentUrl={"/"}
           placement="Below Article Thumbnails Home"
+          containerId="taboola-below-article-thumbnails-home"
         />
-      )}
+      }
     </div>
   );
 };
