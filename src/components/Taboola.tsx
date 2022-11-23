@@ -45,6 +45,8 @@ const Taboola = ({ placement, currentUrl }: Props) => {
       placement: placement,
       target_type: "mix",
     });
+
+    window._taboola.push({ flush: true });
   };
 
   console.log("containerId ", containerId);
@@ -52,8 +54,6 @@ const Taboola = ({ placement, currentUrl }: Props) => {
 
   useEffect(() => {
     onPageLoad();
-
-    window._taboola.push({ flush: true });
   }, []);
 
   return (
