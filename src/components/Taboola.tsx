@@ -1,5 +1,4 @@
-import Head from "next/head";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 let prevUrl = "";
 

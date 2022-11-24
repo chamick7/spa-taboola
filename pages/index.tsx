@@ -1,8 +1,6 @@
 import Taboola from "@/components/Taboola";
 import Script from "next/script";
 
-const isSSR = () => typeof window === "undefined";
-
 const HomePage = () => {
   return (
     <div>
