@@ -21,6 +21,8 @@ const Taboola = ({ placement, currentUrl, containerId }: Props) => {
       window._taboola.push({ notify: "newPageLoad" });
       console.log("newPageLoad");
     }
+
+    url = currentUrl;
   };
 
   const assignAd = () => {
@@ -59,18 +61,7 @@ const Taboola = ({ placement, currentUrl, containerId }: Props) => {
     assignAd();
   }, [currentUrl]);
 
-  return (
-    <>
-      <Head>
-        <script
-          type="text/javascript"
-          src="/scripts/initTaboola.js"
-          async
-        ></script>
-      </Head>
-      {<div id={containerId}></div>}
-    </>
-  );
+  return <>{<div id={containerId}></div>}</>;
 };
 
 export default Taboola;
