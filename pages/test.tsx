@@ -12,13 +12,15 @@ const TestPage = () => {
         async
       ></Script>
       <h1>Test page</h1>
-      {
-        <Taboola
-          currentUrl={"https://spa-taboola.vercel.app/test"}
-          placement="Below Article test Thumbnails"
-          containerId="taboola-below-article-test-thumbnails"
-        />
-      }
+      <div>
+        {
+          <Taboola
+            currentUrl={"https://spa-taboola.vercel.app/test"}
+            placement="Below Article Test Thumbnails"
+            containerId="taboola-below-article-test-thumbnails"
+          />
+        }
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-let url = "";
+let prevUrl = "";
 
 interface Props {
   placement: string;
@@ -10,28 +10,14 @@ interface Props {
 }
 
 const Taboola = ({ placement, currentUrl, containerId }: Props) => {
-  const onPageLoad = () => {
-    console.log("onPageLoad");
+  const [shouldLoadComponent, setShouldLoadComponent] = useState(false);
 
+  const isNewPage = prevUrl !== currentUrl && prevUrl !== "";
+
+  const isSSR = typeof window === "undefined";
+
+  const loadComp = () => {
     window._taboola = window._taboola || [];
-
-    window._taboola.push({ article: "auto", url: currentUrl });
-
-    if (currentUrl !== url) {
-      window._taboola.push({ notify: "newPageLoad" });
-      console.log("newPageLoad");
-    }
-
-    url = currentUrl;
-  };
-
-  const assignAd = () => {
-    console.log("assignAd");
-
-    // *Global* command queue for the page
-    window._taboola = window._taboola || [];
-
-    // For each placement, pass *your* param values, as provided by Taboola:
     window._taboola.push({
       mode: "thumbnails-a",
       container: containerId,
@@ -39,29 +25,51 @@ const Taboola = ({ placement, currentUrl, containerId }: Props) => {
       target_type: "mix",
     });
 
+    window._taboola = window._taboola || [];
     window._taboola.push({ flush: true });
+
+    window._taboolaList = window._taboolaList || [];
+    window._taboolaList.push({
+      mode: "thumbnails-a",
+      container: containerId,
+      placement: placement,
+      target_type: "mix",
+    });
+
+    window._taboolaList = window._taboolaList || [];
+    window._taboolaList.push({ flush: true });
   };
 
-  console.log("containerId ", containerId);
-  console.log("currentUrl ", currentUrl);
+  useEffect(() => {
+    if (shouldLoadComponent) loadComp();
+  }, [shouldLoadComponent]);
 
   useEffect(() => {
-    onPageLoad();
+    if (isNewPage) {
+      window._taboola = window._taboola || [];
+      window._taboola.push({ notify: "newPageLoad" });
+      window._taboolaList = window._taboolaList || [];
+      window._taboolaList.push({ notify: "newPageLoad" });
+    }
 
-    return () => {
-      const nextUp = document.querySelector("#tbl-next-up");
+    window._taboola = window._taboola || [];
+    window._taboola.push({ article: "auto", url: currentUrl });
+    window._taboolaList = window._taboolaList || [];
+    window._taboolaList.push({ article: "auto", url: currentUrl });
+    console.log("prev url ", prevUrl);
+    console.log("push currentUrl ", currentUrl);
 
-      if (nextUp) {
-        nextUp.remove();
-      }
-    };
+    setShouldLoadComponent(true);
+
+    prevUrl = currentUrl;
   }, []);
 
-  useEffect(() => {
-    assignAd();
-  }, [currentUrl]);
-
-  return <>{<div id={containerId}></div>}</>;
+  return (
+    <>
+      {<div id={containerId}></div>}
+      {/* {!isSSR && loadComp()} */}
+    </>
+  );
 };
 
 export default Taboola;
