@@ -1,9 +1,6 @@
 // A *global* property for queuing *all* Taboola commands on this page:
 window._taboola = window._taboola || [];
 
-// Fill in the page type, as provided by Taboola:
-_taboola.push({ article: "auto" });
-
 !(function (e, f, u, i) {
   if (!document.getElementById(i)) {
     e.async = 1;

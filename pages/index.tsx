@@ -18,6 +18,8 @@ const HomePage = () => {
             currentUrl={"https://spa-taboola.vercel.app/"}
             placement="Below Article Home Thumbnails"
             containerId="taboola-below-article-home-thumbnails"
+            mode="thumbnails-a"
+            targetType="mix"
           />
         }
       </div>
